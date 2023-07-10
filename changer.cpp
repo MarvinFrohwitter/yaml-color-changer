@@ -25,7 +25,7 @@
 
 // The function declarations.
 std::string get_color(std::string, std::list<std::string> *);
-std::string split_hex_string(std::string *, std::string *, std::string);
+std::string split_hex_string(std::string *, std::string);
 void write_to_yaml_file(std::string, std::list<std::string> *);
 
 // The main function handels the given argument,
@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
     exit(0);
   }
   const std::string filename = argv[1];
-  FILE *subprocess_in;
+  FILE *subprocess_in = 0;
   try {
     subprocess_in = popen("xrdb -query", "r");
   } catch (const std::exception &) {
@@ -60,7 +60,7 @@ int main(int argc, char *argv[]) {
 
 // The function handels the spliting of the given string, that contains the
 // actual name and the hexcode. It returns the corresponding hex code.
-std::string split_hex_string(std::string *color_name, std::string *color_hex,
+std::string split_hex_string(std::string *color_hex,
                            std::string delimeter) {
 
   color_hex->erase(0, color_hex->find(delimeter) + 1);
@@ -73,7 +73,7 @@ std::string get_color(std::string color_name,
                      std::list<std::string> *xr_colors) {
   for (auto colors : *xr_colors) {
     if (colors.find(color_name) != std::string::npos) {
-      return split_hex_string(&color_name, &colors, "\t");
+      return split_hex_string(&colors, "\t");
     }
   }
   return "";
