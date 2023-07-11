@@ -11,9 +11,9 @@ all: options changer
 
 options:
 	@echo changer build options:
-	@echo "CFLAGS = ${CFLAGS}"
+	@echo "CXXFLAGS = ${CXXFLAGS}"
 	@echo "LIBS   = ${LIBS}"
-	@echo "CC     = ${CC}"
+	@echo "CXX     = ${CXX}"
 
 changer:
 	${CXX} -o $@ ${SRC} ${CXXFLAGS} ${LIBS}
